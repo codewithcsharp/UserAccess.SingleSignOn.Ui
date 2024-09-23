@@ -1,0 +1,73 @@
+/* Ensure the section covers full width and maintains a height of 80vh */
+.testimonial-section {
+    width: 100vw;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #30cfd0, #330867);
+    color: white;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+  
+  /* Center the content with max-width to avoid overflow on very large screens */
+  .testimonial-content {
+    text-align: center;
+    max-width: 800px;
+    padding: 20px;
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .quote {
+    font-size: 2rem;
+    line-height: 1.4;
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+  
+  .author {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .author-title {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  
+  /* Flexbox layout for the navigation arrows and counter */
+  .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .nav-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    margin: 0 15px;
+    padding: 5px 15px;
+    transition: color 0.3s;
+  }
+  
+  .nav-button:hover {
+    color: #ffdd57;
+  }
+  
+  .counter {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 10px;
+  }
+  
