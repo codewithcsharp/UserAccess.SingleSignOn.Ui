@@ -2,11 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import Navbar from './components/Navbar';
+import ImageSlider from './components/ImageSlider';
+import TestimonialSection from './components/TestimonialSection';
+import Footer from './components/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Navbar />
+    <ImageSlider />
+    <TestimonialSection />
+    <Footer />
   </React.StrictMode>
 );
 
