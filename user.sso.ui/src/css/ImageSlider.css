@@ -1,120 +1,51 @@
-/* Basic Styles */
+/* Slider Container */
 .slider-container {
-    width: 100vw;
-    height: 80vh;
-    position: relative;
-    overflow: hidden;
-    margin: 0;
-  }
-  
-  .slider {
-    display: flex;
-    height: 100%;
-  }
-  
-  .slide {
-    min-width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: opacity 0.5s ease-in-out;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  .slide.active {
-    opacity: 1;
-    z-index: 1;
-  }
-  
-  /* Radio Buttons for Slide Control */
-  .radio-buttons {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-  }
-  
-  .radio {
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    background-color: white;
-    border-radius: 50%;
-    border: 2px solid #333;
-    cursor: pointer;
-  }
-  
-  .radio:checked {
-    background-color: #333;
-  }
-  
-  /* Contact Us Button */
-  .contact-us-button {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 10;
-  }
-  
-  .contact-us-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Multi-Step Form Container */
-  .form-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    width: 400px;
-    border-radius: 10px;
-    z-index: 10;
-  }
-  
-  .form-content {
-    text-align: center;
-  }
-  
-  .form-step {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  input, textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+/* Slider Wrapper */
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+}
+
+/* Slide Styles */
+.slide {
+  min-width: 100%;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+}
+
+.slide.active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Radio Buttons for Manual Control */
+.radio-buttons {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.radio {
+  appearance: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.radio:checked {
+  background-color: #007bff;
+}
