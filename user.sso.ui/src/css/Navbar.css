@@ -1,18 +1,15 @@
-/* Navbar styling */
 body, html {
   margin: 0;
   padding: 0;
 }
-
+/* Navbar Styles */
 .navbar {
-  width: 100vw;
-  height: 60px;
-  background-color: #7781a7;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px; /* Removed extra padding */
+  background: linear-gradient(135deg, #30cfd0, #330867);
+  color: white;
 }
 
 .navbar-left {
@@ -23,86 +20,106 @@ body, html {
 .menu-button {
   background: none;
   border: none;
-  color: #fff;
-  font-size: 24px;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
   margin-right: 20px;
-}
-
-.menu-icon {
-  font-size: 24px;
 }
 
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #fff;
 }
 
 .navbar-menu {
-  list-style: none;
   display: flex;
-  margin: 0;
-  padding: 0;
+  list-style-type: none;
+  gap: 20px;
 }
 
 .navbar-item {
-  margin-right: 20px;
-  font-size: 16px;
-  color: #fff;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .navbar-item:hover {
-  color: #00e5ff;
+  text-decoration: underline;
 }
 
 .navbar-right {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .register-button,
 .login-button {
-  border: 2px solid transparent;
-  border-radius: 25px;
+  background-color: #007bff;
+  border: none;
   padding: 10px 20px;
-  font-size: 14px;
-  margin-right: 10px;
-  cursor: pointer;
-  transition: 0.3s ease;
-  background-color: transparent; /* Removed background */
   color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.register-button {
-  border: 2px solid #30cfd0; /* Added border to make it dynamic without background */
-}
-
-.login-button {
-  border: 2px solid #fff; /* Border added for more distinction */
-}
-
-.register-button:hover {
-  color: #30cfd0;
-  border-color: #30cfd0;
-  background-color: transparent; /* Ensure no background on hover */
-}
-
+.register-button:hover,
 .login-button:hover {
-  color: #30cfd0;
-  border-color: #30cfd0;
-  background-color: transparent; /* Ensure no background on hover */
-}
-
-.user-login {
-  display: flex;
-  align-items: center;
+  background-color: #0056b3;
 }
 
 .user-login-icon {
-  width: 25px;
-  height: 25px;
-  border-radius: 20%;
-  margin-right: 30px; /* Added margin on the right side */
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* Form Container Styles */
+.form-container {
+  position: absolute;
+  top: 100px; /* Adjusted according to the height of your navbar */
+  left: 0;
+  right: 60%;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100; /* Ensure the form is above other elements */
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-step {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"] {
+  padding: 10px;
+  width: 95%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }

@@ -1,6 +1,8 @@
 /* Ensure the section covers full width and maintains a height of 80vh */
 .testimonial-section {
-    width: 100vw;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
     height: 75vh;
     display: flex;
     justify-content: center;

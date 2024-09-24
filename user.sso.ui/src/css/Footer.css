@@ -1,8 +1,10 @@
 .footer {
   width: 100%;
+  position: relative;
+  overflow: hidden;
   background-color: #6473f5;
   color: #00eaff;
-  padding: 20px 9.5px; /* Added 20px padding for both left and right */
+  /* padding: 20px 9.5px; Added 20px padding for both left and right */
   font-family: Arial, sans-serif;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
 }
