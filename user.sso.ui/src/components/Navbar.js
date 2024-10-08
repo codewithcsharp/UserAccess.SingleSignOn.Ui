@@ -3,9 +3,9 @@ import '../css/Navbar.css';
 import userIcon from '../css/Icons/user-regular.svg';
 
 const Navbar = () => {
+  const [formStep, setFormStep] = useState(1);
   const [isLoginVisible, setLoginVisible] = useState(false);
   const [isRegisterVisible, setRegisterVisible] = useState(false);
-  const [formStep, setFormStep] = useState(1);
 
   const toggleLogin = () => {
     setLoginVisible(!isLoginVisible);
