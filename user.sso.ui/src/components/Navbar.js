@@ -3,11 +3,18 @@ import '../css/Navbar.css';
 import userIcon from '../css/Icons/user-regular.svg';
 
 const Navbar = () => {
-  const [isFormVisible, setFormVisible] = useState(false);
+  const [isLoginVisible, setLoginVisible] = useState(false);
+  const [isRegisterVisible, setRegisterVisible] = useState(false);
   const [formStep, setFormStep] = useState(1);
 
-  const toggleForm = () => {
-    setFormVisible(!isFormVisible);
+  const toggleLogin = () => {
+    setLoginVisible(!isLoginVisible);
+    setRegisterVisible(false); // Hide register form when login is toggled
+  };
+
+  const toggleRegister = () => {
+    setRegisterVisible(!isRegisterVisible);
+    setLoginVisible(false); // Hide login form when register is toggled
   };
 
   const nextFormStep = () => {
@@ -36,22 +43,19 @@ const Navbar = () => {
       </ul>
 
       <div className="navbar-right">
-        <button className="register-button" onClick={toggleForm}>
-          Register
-        </button>
-        <button className="login-button">Login</button>
+        <button className="login-button" onClick={toggleLogin}> Login </button>
         <div className="user-login">
           <img
-            src={userIcon}
-            alt="User Login"
-            className="user-login-icon"
+           src={userIcon}
+           alt="User Login"
+           className="user-login-icon"
           />
         </div>
       </div>
 
-      {/* Multi-Step Form (toggle visibility) */}
-      {isFormVisible && (
-        <div className="form-container">
+      {/* Registration Form */}
+      {isRegisterVisible && (
+        <div className="form-container register-container">
           <div className="form-content">
             {formStep === 1 && (
               <div className="form-step">
@@ -99,6 +103,22 @@ const Navbar = () => {
                 <button onClick={() => alert('Form submitted!')}>Submit</button>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Login Form */}
+      {isLoginVisible && (
+        <div className="form-container login-container">
+          <div className="form-content">
+            <h2>Login Information</h2>
+            <input type="text" placeholder="Username" />
+            <input type="password" placeholder="Password" />
+            <button onClick={() => alert('Logged in!')}>Login</button>
+            <div className="signup-link">
+              <span>Don't have an account? </span>
+              <a href="#" onClick={toggleRegister}>Sign up</a>
+            </div>
           </div>
         </div>
       )}
