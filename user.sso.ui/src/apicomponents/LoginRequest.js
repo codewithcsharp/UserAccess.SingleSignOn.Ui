@@ -16,7 +16,7 @@ useEffect(() => {
 	  })
 	  if(!request.ok)
 		throw new Error('');
-	  const response = await request.json();
+	    const response = await request.json();
 	  setResult(response);
 	}
 	catch(error) {
