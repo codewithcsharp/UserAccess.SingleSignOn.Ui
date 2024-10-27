@@ -1,23 +1,43 @@
 import React, { useState } from 'react';
+import RegistrationRequest from '../UtilityService/RegistrationRequest'; // Import the API function
 import '../css/Navbar.css';
 import userIcon from '../css/Icons/user-regular.svg';
 
 const Navbar = () => {
-  const [formStep, setFormStep] = useState(1);
-  const [isLoginVisible, setLoginVisible] = useState(false);
-  const [isRegisterVisible, setRegisterVisible] = useState(false);
+  const [FormStep, setFormStep] = useState(1);
+  const [IsLoginVisible, setLoginVisible] = useState(false);
+  const [IsRegisterVisible, setRegisterVisible] = useState(false);
+  const [FormData, setFormData] = useState({username: '', email: '', password: '', confirmPassword: '',
+    fullName: '', mobileNumber: '', aadharNumber: '', dob: '', street: '', city: '', state: '', postalCode: '',
+  });
+  const [passwordError, setPasswordError] = useState('');
 
   const toggleLogin = () => {
-    setLoginVisible(!isLoginVisible);
-    setRegisterVisible(false); // Hide register form when login is toggled
+    setLoginVisible(!IsLoginVisible);
+    setRegisterVisible(false);
   };
 
   const toggleRegister = () => {
-    setRegisterVisible(!isRegisterVisible);
+    setRegisterVisible(!IsRegisterVisible);
     setLoginVisible(false); // Hide login form when register is toggled
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const validatePasswords = () => {
+    if (FormData.password !== FormData.confirmPassword) {
+      setPasswordError('Passwords do not match');
+      return false;
+    }
+    setPasswordError('');
+    return true;
+  };
+
   const nextFormStep = () => {
+    if (FormStep === 1 && !validatePasswords()) return;
     setFormStep((prevStep) => prevStep + 1);
   };
 
@@ -54,53 +74,54 @@ const Navbar = () => {
       </div>
 
       {/* Registration Form */}
-      {isRegisterVisible && (
+      {IsRegisterVisible && (
         <div className="form-container register-container">
           <div className="form-content">
-            {formStep === 1 && (
+            {FormStep === 1 && (
               <div className="form-step">
                 <h2>Registration Information</h2>
-                <input type="text" placeholder="Username" />
-                <input type="email" placeholder="Email Address" />
-                <input type="password" placeholder="Password" />
-                <input type="password" placeholder="Confirm Password" />
+                <input type="text" name="username" value={FormData.username} onChange={handleInputChange} placeholder="Username" />
+                <input type="email" name="email" value={FormData.email} onChange={handleInputChange} placeholder="Email Address" />
+                <input type="password" name="password" value={FormData.password} onChange={handleInputChange} placeholder="Password" />
+                <input type="password" name="confirmPassword" value={FormData.confirmPassword} onChange={handleInputChange} placeholder="Confirm Password" />
+                {passwordError && <p className="error">{passwordError}</p>}
                 <button onClick={nextFormStep}>Next</button>
               </div>
             )}
 
-            {formStep === 2 && (
+            {FormStep === 2 && (
               <div className="form-step">
                 <h2>User Information</h2>
-                <input type="text" placeholder="Full Name" />
-                <input type="tel" placeholder="Mobile Number" />
-                <input type="text" placeholder="Aadhar Number" />
-                <input type="date" placeholder="Date of Birth" />
+                <input type="text" name="fullName" value={FormData.fullName} onChange={handleInputChange} placeholder="Full Name" />
+                <input type="tel" name="mobileNumber" value={FormData.mobileNumber} onChange={handleInputChange} placeholder="Mobile Number" />
+                <input type="text" name="aadharNumber" value={FormData.aadharNumber} onChange={handleInputChange} placeholder="Aadhar Number" />
+                <input type="date" name="dob" value={FormData.dob} onChange={handleInputChange} placeholder="Date of Birth" />
                 <button onClick={prevFormStep}>Previous</button>
                 <button onClick={nextFormStep}>Next</button>
               </div>
             )}
 
-            {formStep === 3 && (
+            {FormStep === 3 && (
               <div className="form-step">
                 <h2>Current Address</h2>
-                <input type="text" placeholder="Street Name" />
-                <input type="tel" placeholder="City Name" />
-                <input type="text" placeholder="State Name" />
-                <input type="text" placeholder="Postal Code" />
+                <input type="text" name="street" value={FormData.street} onChange={handleInputChange} placeholder="Street Name" />
+                <input type="tel" name="city" value={FormData.city} onChange={handleInputChange} placeholder="City Name" />
+                <input type="text" name="state" value={FormData.state} onChange={handleInputChange} placeholder="State Name" />
+                <input type="text" name="postalCode" value={FormData.postalCode} onChange={handleInputChange} placeholder="Postal Code" />
                 <button onClick={prevFormStep}>Previous</button>
                 <button onClick={nextFormStep}>Next</button>
               </div>
             )}
 
-            {formStep === 4 && (
+            {FormStep === 4 && (
               <div className="form-step">
                 <h2>Permanent Address</h2>
-                <input type="text" placeholder="Street Name" />
-                <input type="tel" placeholder="City Name" />
-                <input type="text" placeholder="State Name" />
-                <input type="text" placeholder="Postal Code" />
+                <input type="text" name="street" value={FormData.street} onChange={handleInputChange} placeholder="Street Name" />
+                <input type="tel" name="city" value={FormData.city} onChange={handleInputChange} placeholder="City Name" />
+                <input type="text" name="state" value={FormData.state} onChange={handleInputChange} placeholder="State Name" />
+                <input type="text" name="postalCode" value={FormData.postalCode} onChange={handleInputChange} placeholder="Postal Code" />
                 <button onClick={prevFormStep}>Previous</button>
-                <button onClick={() => alert('Form submitted!')}>Submit</button>
+                <RegistrationRequest FormData = {FormData} OnSuccess={() => alert('Registration Successful!')}>Submit</RegistrationRequest>
               </div>
             )}
           </div>
@@ -108,7 +129,7 @@ const Navbar = () => {
       )}
 
       {/* Login Form */}
-      {isLoginVisible && (
+      {IsLoginVisible && (
         <div className="form-container login-container">
           <div className="form-content">
             <h2>Login Information</h2>
