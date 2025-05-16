@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import RegistrationRequest from '../UtilityService/RegistrationRequest'; // Import the API function
+import RegistrationRequest from '../apicomponents/RegistrationRequest';
+import LoginRequest from '../apicomponents/LoginRequest';
 import '../css/Navbar.css';
 import userIcon from '../css/Icons/user-regular.svg';
 
@@ -7,10 +8,19 @@ const Navbar = () => {
   const [FormStep, setFormStep] = useState(1);
   const [IsLoginVisible, setLoginVisible] = useState(false);
   const [IsRegisterVisible, setRegisterVisible] = useState(false);
-  const [FormData, setFormData] = useState({username: '', email: '', password: '', confirmPassword: '',
-    fullName: '', mobileNumber: '', aadharNumber: '', dob: '', street: '', city: '', state: '', postalCode: '',
+  const [FormData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    fullName: '',
+    mobileNumber: '',
+    aadharNumber: '',
+    dob: '',
+    isWorkingProfessional: true, // Default to true
   });
   const [passwordError, setPasswordError] = useState('');
+  const [LoginFormData, setLoginFormData] = useState({ username: '', password: '' });
 
   const toggleLogin = () => {
     setLoginVisible(!IsLoginVisible);
@@ -19,12 +29,13 @@ const Navbar = () => {
 
   const toggleRegister = () => {
     setRegisterVisible(!IsRegisterVisible);
-    setLoginVisible(false); // Hide login form when register is toggled
+    setLoginVisible(false);
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    const inputValue = type === 'checkbox' ? checked : value;
+    setFormData((prevData) => ({ ...prevData, [name]: inputValue }));
   };
 
   const validatePasswords = () => {
@@ -45,8 +56,14 @@ const Navbar = () => {
     setFormStep((prevStep) => prevStep - 1);
   };
 
+  const handleRegistrationSuccess = () => {
+    alert('Registration Successful!');
+    setRegisterVisible(false); // Close form on successful registration
+  };
+
   return (
     <nav className="navbar">
+      {/* Navbar content */}
       <div className="navbar-left">
         <button className="menu-button">
           <span className="menu-icon">&#x2630;</span>
@@ -65,11 +82,9 @@ const Navbar = () => {
       <div className="navbar-right">
         <button className="login-button" onClick={toggleLogin}> Login </button>
         <div className="user-login">
-          <img
-           src={userIcon}
-           alt="User Login"
-           className="user-login-icon"
-          />
+          <LoginRequest LoginFormData={setLoginFormData}>
+            <img src={userIcon} alt="User Profile" className="user-profile-icon" onClick={toggleLogin} />
+          </LoginRequest>
         </div>
       </div>
 
@@ -80,10 +95,10 @@ const Navbar = () => {
             {FormStep === 1 && (
               <div className="form-step">
                 <h2>Registration Information</h2>
-                <input type="text" name="username" value={FormData.username} onChange={handleInputChange} placeholder="Username" />
-                <input type="email" name="email" value={FormData.email} onChange={handleInputChange} placeholder="Email Address" />
-                <input type="password" name="password" value={FormData.password} onChange={handleInputChange} placeholder="Password" />
-                <input type="password" name="confirmPassword" value={FormData.confirmPassword} onChange={handleInputChange} placeholder="Confirm Password" />
+                <input type="text" id='username' name="username" value={FormData.username} onChange={handleInputChange} placeholder="Username" />
+                <input type="email" id='email' name="email" value={FormData.email} onChange={handleInputChange} placeholder="Email Address" />
+                <input type="password" id='password' name="password" value={FormData.password} onChange={handleInputChange} placeholder="Password" />
+                <input type="password" id='confirmPassword' name="confirmPassword" value={FormData.confirmPassword} onChange={handleInputChange} placeholder="Confirm Password" />
                 {passwordError && <p className="error">{passwordError}</p>}
                 <button onClick={nextFormStep}>Next</button>
               </div>
@@ -96,32 +111,13 @@ const Navbar = () => {
                 <input type="tel" name="mobileNumber" value={FormData.mobileNumber} onChange={handleInputChange} placeholder="Mobile Number" />
                 <input type="text" name="aadharNumber" value={FormData.aadharNumber} onChange={handleInputChange} placeholder="Aadhar Number" />
                 <input type="date" name="dob" value={FormData.dob} onChange={handleInputChange} placeholder="Date of Birth" />
+                <div className="toggle-container">
+                  <label>Are you a working professional?</label>
+                  <input type="checkbox" name="isWorkingProfessional" checked={FormData.isWorkingProfessional} onChange={handleInputChange} />
+                  <span>{FormData.isWorkingProfessional ? "Yes" : "No"}</span>
+                </div>
                 <button onClick={prevFormStep}>Previous</button>
-                <button onClick={nextFormStep}>Next</button>
-              </div>
-            )}
-
-            {FormStep === 3 && (
-              <div className="form-step">
-                <h2>Current Address</h2>
-                <input type="text" name="street" value={FormData.street} onChange={handleInputChange} placeholder="Street Name" />
-                <input type="tel" name="city" value={FormData.city} onChange={handleInputChange} placeholder="City Name" />
-                <input type="text" name="state" value={FormData.state} onChange={handleInputChange} placeholder="State Name" />
-                <input type="text" name="postalCode" value={FormData.postalCode} onChange={handleInputChange} placeholder="Postal Code" />
-                <button onClick={prevFormStep}>Previous</button>
-                <button onClick={nextFormStep}>Next</button>
-              </div>
-            )}
-
-            {FormStep === 4 && (
-              <div className="form-step">
-                <h2>Permanent Address</h2>
-                <input type="text" name="street" value={FormData.street} onChange={handleInputChange} placeholder="Street Name" />
-                <input type="tel" name="city" value={FormData.city} onChange={handleInputChange} placeholder="City Name" />
-                <input type="text" name="state" value={FormData.state} onChange={handleInputChange} placeholder="State Name" />
-                <input type="text" name="postalCode" value={FormData.postalCode} onChange={handleInputChange} placeholder="Postal Code" />
-                <button onClick={prevFormStep}>Previous</button>
-                <RegistrationRequest FormData = {FormData} OnSuccess={() => alert('Registration Successful!')}>Submit</RegistrationRequest>
+                <RegistrationRequest FormData={FormData} OnSuccess={handleRegistrationSuccess} />
               </div>
             )}
           </div>

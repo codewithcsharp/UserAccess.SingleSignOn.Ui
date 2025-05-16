@@ -1,39 +1,42 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react';
 
-const [loading, setLoading] = useState(true);
-const [result, setResult] = useState(null);
-const [error, setError] = useState(null);
+const RegistrationRequest = ({ FormData, OnSuccess, OnError }) => {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
-useEffect(() => {
-    const RegistrationRequestAsync = async () => {
-        try {
-        const request = await fetch('https://localhost:44398/api/Users/registranstion', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({request})
-        })
-        if(!request.ok) 
-            throw new Error('');
-            const response = await request.json();
-            setResult(response);
-        } catch (error) {
-            setError(error.message);
-        } 
-		finally {
-            setLoading(false);
-        }
-    };
-    RegistrationRequestAsync();
-}, []);
+  const handleRegister = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('https://localhost:44398/api/Users/userinfo/registranstion', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(FormData)
+      });
+      if (!response.ok) throw new Error('Registration failed');
+      const data = await response.json();
+      setResult(data);
+      if (OnSuccess) OnSuccess(data);
+    } catch (err) {
+      setError(err.message);
+      if (OnError) OnError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-if(loading) {
-	return (<div>Please wait loading...</div>);
-}
-if(error) {
-	return (<div>Something went wrong...</div>);
-}
-return (<div>{JSON.stringify(result)}</div>);
+  return (
+    <div>
+      <button onClick={handleRegister} disabled={loading}>
+        {loading ? 'Registering...' : 'Register'}
+      </button>
+      {error && <div>Something went wrong... {error}</div>}
+      {result && <div>{JSON.stringify(result)}</div>}
+    </div>
+  );
+};
 
-export default RegistrationRequestAsync;
+export default RegistrationRequest;
