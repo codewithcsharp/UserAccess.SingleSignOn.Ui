@@ -1,28 +1,19 @@
 import React, { useState } from 'react';
-import RegistrationApi from '../Utility/RegistrationApi';
+import RegistrationUtility from '../utility/RegistrationUtility';
 
 const RegistrationRequest = ({ FormData, OnSuccess }) => {
-    const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
 
     const handleSubmit = async () => {
-        setLoading(true);
-
         try {
-            response = await RegistrationApi(FormData);
+            response = await RegistrationUtility(FormData);
             setResponse(response);
-            OnSuccess(response);
+            if (OnSuccess) OnSuccess(response);
         } catch (error) {
             setError(error.message);
-        } finally {
-            setLoading(false);
         }
     };
-
-    if (loading) {
-        return <div>Please wait, loading...</div>;
-    }
 
     if (error) {
         return <div>Something went wrong: {error}</div>;

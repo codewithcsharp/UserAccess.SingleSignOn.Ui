@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+const LoginRequest = () => {
+
 const [loading, setLoading] = useState(true);
 const [result, setResult] = useState(null);
 const [error, setError] = useState(null);
@@ -34,8 +36,8 @@ if(loading) {
 }
 
 if (error) {
-  return (<div>Something went wrong...</div>);
+  return <div>Something went wrong...{error}</div>;
 }
   return (<div>{JSON.stringify(result)}</div>)
-
-export default LoginRequestAsync;
+};
+export default LoginRequest;
