@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const RegistrationRequest = ({ FormData, OnSuccess, OnError }) => {
+const RegistrationRequest = ({ FormData, OnSuccess, OnError, className }) => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ const RegistrationRequest = ({ FormData, OnSuccess, OnError }) => {
 
   return (
     <div>
-      <button onClick={handleRegister} disabled={loading}>
+      <button onClick={handleRegister} disabled={loading} className={className}>
         {loading ? 'Registering...' : 'Register'}
       </button>
       {error && <div>Something went wrong... {error}</div>}
