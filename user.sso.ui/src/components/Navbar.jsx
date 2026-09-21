@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import RegistrationRequest from '../apicomponents/RegistrationRequest';
 import LoginRequest from '../apicomponents/LoginRequest';
 import '../css/Navbar.css';
-import userIcon from '../css/Icons/user-regular.svg';
+import { CircleChevronLeft, CircleUserRound } from 'lucide-react';
 
 const Navbar = () => {
+  const storedProfile = JSON.parse(localStorage.getItem('userProfile') || 'null');
   const [FormStep, setFormStep] = useState(1);
   const [IsLoginVisible, setLoginVisible] = useState(false);
   const [IsRegisterVisible, setRegisterVisible] = useState(false);
@@ -22,6 +23,7 @@ const Navbar = () => {
   });
   const [passwordError, setPasswordError] = useState('');
   const [LoginFormData, setLoginFormData] = useState({ username: '', password: '' });
+  const [userProfile, setUserProfile] = useState(storedProfile);
 
   const toggleLogin = () => {
     setLoginVisible(!IsLoginVisible);
@@ -80,6 +82,18 @@ const Navbar = () => {
     setRegisterVisible(false); // Close form on successful registration
   };
 
+  const handleLoginSuccess = (response) => {
+    const profileData = response?.data || response?.user || response || {};
+    const profile = {
+      username: profileData.username || profileData.userName || LoginFormData.username,
+      photoUrl: profileData.photoUrl || profileData.profilePhoto || profileData.photo || profileData.avatar,
+    };
+
+    localStorage.setItem('userProfile', JSON.stringify(profile));
+    setUserProfile(profile);
+    setLoginVisible(false);
+  };
+
   return (
     <nav className="navbar">
       {/* Navbar content */}
@@ -116,26 +130,15 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-right">
-        <div className="auth-switch">
-          <button
-            type="button"
-            className={`auth-toggle-button ${IsLoginVisible ? 'active' : ''}`}
-            onClick={toggleLogin}
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            className={`auth-toggle-button ${IsRegisterVisible ? 'active' : ''}`}
-            onClick={toggleRegister}
-          >
-            Register
-          </button>
-        </div>
         <div className="user-login">
-          <LoginRequest LoginFormData={setLoginFormData}>
-            <img src={userIcon} alt="User Profile" className="user-profile-icon" onClick={toggleLogin} />
-          </LoginRequest>
+          <button type="button" className="profile-button" onClick={toggleLogin} aria-label={userProfile?.username ? `Signed in as ${userProfile.username}` : 'Open login form'}>
+            {userProfile?.photoUrl ? (
+              <img src={userProfile.photoUrl} alt="" className="user-profile-icon" />
+            ) : (
+              <CircleUserRound className="user-profile-icon" aria-hidden="true" />
+            )}
+            {userProfile?.username && <span>{userProfile.username}</span>}
+          </button>
         </div>
       </div>
 
@@ -160,7 +163,7 @@ const Navbar = () => {
               <div className="form-step">
                 <div className="form-header form-header-inline">
                   <button type="button" className="back-form-button" onClick={prevFormStep} aria-label="Go back to previous step">
-                    ←
+                    <CircleChevronLeft size={20} aria-hidden="true" />
                   </button>
                   <button type="button" className="close-form-button" onClick={closeAllForms} aria-label="Close registration form">
                     ×
@@ -192,21 +195,28 @@ const Navbar = () => {
       {/* Login Form */}
       {IsLoginVisible && (
         <div className="form-container login-container">
-          <div className="form-content">
+          <LoginRequest LoginFormData={LoginFormData} onSuccess={handleLoginSuccess}>
+            {({ handleLogin, loading }) => (
+              <div className="form-content">
             <div className="form-header">
               <h2>Login Information</h2>
               <button type="button" className="close-form-button" onClick={closeAllForms} aria-label="Close login form">
                 ×
               </button>
             </div>
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
-            <button onClick={() => alert('Logged in!')}>Login</button>
+            <input type="text" name="username" value={LoginFormData.username} onChange={(event) => setLoginFormData({ ...LoginFormData, username: event.target.value })} placeholder="Username" />
+            <input type="password" name="password" value={LoginFormData.password} onChange={(event) => setLoginFormData({ ...LoginFormData, password: event.target.value })} placeholder="Password" />
+            <button onClick={handleLogin} disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
             <div className="signup-link">
               <span>Don't have an account? </span>
               <button type="button" className="secondary-action-button" onClick={toggleRegister}>Sign up</button>
             </div>
-          </div>
+            <div>
+              
+            </div>
+              </div>
+            )}
+          </LoginRequest>
         </div>
       )}
     </nav>

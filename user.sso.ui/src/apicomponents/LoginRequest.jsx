@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LoginRequest = ({ LoginFormData, onSuccess, onError }) => {
+const LoginRequest = ({ LoginFormData, onSuccess, onError, children }) => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
@@ -30,9 +30,7 @@ const LoginRequest = ({ LoginFormData, onSuccess, onError }) => {
 
   return (
     <div>
-      {/* <button onClick={handleLogin} disabled={loading}>
-        {loading ? 'Logging in...' : 'Login'}
-      </button> */}
+      {typeof children === 'function' ? children({ handleLogin, loading }) : children}
       {error && <div>Something went wrong... {error}</div>}
       {result && <div>{JSON.stringify(result)}</div>}
     </div>

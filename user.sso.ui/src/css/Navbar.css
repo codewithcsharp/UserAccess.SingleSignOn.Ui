@@ -209,6 +209,34 @@ body, html {
   cursor: pointer;
 }
 
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.profile-button:hover {
+  background: #ffffff1f;
+  border-radius: 50%;
+}
+
+.user-profile-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  color: #ffffff;
+  stroke-width: 1.8;
+}
+
+img.user-profile-icon {
+  border: 3px solid #000000;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 /* Form Container Styles */
 .form-container {
   position: absolute;
