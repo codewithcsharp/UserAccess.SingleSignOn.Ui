@@ -195,9 +195,9 @@ const Navbar = ({ onDashboardClick }) => {
                 <input type="text" name="fullName" value={FormData.fullName} onChange={handleInputChange} placeholder="Full Name" />
                 <input type="tel" name="mobileNumber" value={FormData.mobileNumber} onChange={handleInputChange} placeholder="Mobile Number" />
                 <input type="text" name="aadharNumber" value={FormData.aadharNumber} onChange={handleInputChange} placeholder="Aadhar Number" />
-                <label className="profile-photo-field">
+                <label className="profile-photo-field" htmlFor="profilePhoto">
                   <span>Profile photo</span>
-                  <input type="file" name="profilePhoto" accept="image/*" onChange={handleProfilePhotoChange} />
+                  <input id="profilePhoto" type="file" name="profilePhoto" accept="image/*" onChange={handleProfilePhotoChange} />
                   {FormData.profilePhoto && <img src={FormData.profilePhoto} alt="Selected profile preview" className="profile-photo-preview" />}
                 </label>
                 <div className="toggle-container">
