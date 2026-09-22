@@ -114,6 +114,15 @@ body, html {
   background: rgba(255, 255, 255, 0.09);
 }
 
+.dashboard-nav-button {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
 
 @media (max-width: 768px) {
   .navbar {
@@ -338,8 +347,7 @@ img.user-profile-icon {
 input[type="text"],
 input[type="email"],
 input[type="password"],
-input[type="tel"],
-input[type="date"] {
+input[type="tel"] {
   padding: 10px;
   width: 95%;
   border: 1px solid #ccc;
@@ -358,10 +366,37 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="tel"]:focus,
-input[type="date"]:focus {
+input[type="file"]:focus {
   outline: none;
   border-color: #4a90e2;
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.12);
+}
+
+.profile-photo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #3b82a8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.profile-photo-field input[type="file"] {
+  width: 95%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: #3b82a8;
+  background: #fff;
+}
+
+.profile-photo-preview {
+  width: 64px;
+  height: 64px;
+  border: 2px solid #3b82a8;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 button {

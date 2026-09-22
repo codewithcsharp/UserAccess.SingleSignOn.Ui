@@ -4,7 +4,7 @@ import LoginRequest from '../apicomponents/LoginRequest';
 import '../css/Navbar.css';
 import { CircleChevronLeft, CircleUserRound } from 'lucide-react';
 
-const Navbar = () => {
+const Navbar = ({ onDashboardClick }) => {
   const storedProfile = JSON.parse(localStorage.getItem('userProfile') || 'null');
   const [FormStep, setFormStep] = useState(1);
   const [IsLoginVisible, setLoginVisible] = useState(false);
@@ -18,7 +18,7 @@ const Navbar = () => {
     fullName: '',
     mobileNumber: '',
     aadharNumber: '',
-    dob: '',
+    profilePhoto: '',
     isWorkingProfessional: true, // Default to true
   });
   const [passwordError, setPasswordError] = useState('');
@@ -50,6 +50,17 @@ const Navbar = () => {
     const { name, value, type, checked } = e.target;
     const inputValue = type === 'checkbox' ? checked : value;
     setFormData((prevData) => ({ ...prevData, [name]: inputValue }));
+  };
+
+  const handleProfilePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFormData((prevData) => ({ ...prevData, profilePhoto: reader.result }));
+    };
+    reader.readAsDataURL(file);
   };
 
   const validatePasswords = () => {
@@ -110,6 +121,18 @@ const Navbar = () => {
       </div>
 
       <ul className={`navbar-menu ${isMenuOpen ? 'open' : ''}`}>
+        <li className="navbar-item">
+          <button
+            type="button"
+            className="dashboard-nav-button"
+            onClick={() => {
+              onDashboardClick();
+              setIsMenuOpen(false);
+            }}
+          >
+            Dashboard
+          </button>
+        </li>
         <li className="navbar-item">Services</li>
         <li className="navbar-item">Industries</li>
         <li className="navbar-item">Insights</li>
@@ -172,7 +195,11 @@ const Navbar = () => {
                 <input type="text" name="fullName" value={FormData.fullName} onChange={handleInputChange} placeholder="Full Name" />
                 <input type="tel" name="mobileNumber" value={FormData.mobileNumber} onChange={handleInputChange} placeholder="Mobile Number" />
                 <input type="text" name="aadharNumber" value={FormData.aadharNumber} onChange={handleInputChange} placeholder="Aadhar Number" />
-                <input type="date" name="dob" value={FormData.dob} onChange={handleInputChange} placeholder="Date of Birth" />
+                <label className="profile-photo-field">
+                  <span>Profile photo</span>
+                  <input type="file" name="profilePhoto" accept="image/*" onChange={handleProfilePhotoChange} />
+                  {FormData.profilePhoto && <img src={FormData.profilePhoto} alt="Selected profile preview" className="profile-photo-preview" />}
+                </label>
                 <div className="toggle-container">
                   <label>Are you a working professional?</label>
                   <button
