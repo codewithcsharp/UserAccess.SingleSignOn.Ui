@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: User SSO UI CI
 
 on:
   push:
@@ -6,23 +6,43 @@ on:
   pull_request:
     branches: [ "master" ]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    defaults:
+      run:
+        working-directory: user.sso.ui
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Check out repository
+      uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 22.x
+        cache: npm
+        cache-dependency-path: user.sso.ui/package-lock.json
 
-    - name: Build
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      env:
+        CI: true
       run: |
-        npm install
-        npx webpack
+        if find src -type f \( -name '*.test.js' -o -name '*.test.jsx' -o -name '*.spec.js' -o -name '*.spec.jsx' \) | grep -q .; then
+          npm test -- --watchAll=false
+        else
+          echo "::warning::No test files found; add tests to make this CI gate meaningful."
+        fi
+
+    - name: Build production bundle
+      run: npm run build
