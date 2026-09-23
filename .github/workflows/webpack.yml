@@ -34,15 +34,13 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Run ESLint
+      run: npm run lint
+
     - name: Run tests
       env:
         CI: true
-      run: |
-        if find src -type f \( -name '*.test.js' -o -name '*.test.jsx' -o -name '*.spec.js' -o -name '*.spec.jsx' \) | grep -q .; then
-          npm test -- --watchAll=false
-        else
-          echo "::warning::No test files found; add tests to make this CI gate meaningful."
-        fi
+      run: npm test -- --watchAll=false
 
     - name: Build production bundle
       run: npm run build
