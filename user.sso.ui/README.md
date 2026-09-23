@@ -1,3 +1,16 @@
+# User SSO UI application
+
+This directory contains the React application. From the repository root, see the main [project README](../README.md) for setup and contribution instructions.
+
+Available commands:
+
+```bash
+npm ci
+npm start
+npm run lint
+npm test -- --watchAll=false
+npm run build
+```
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
