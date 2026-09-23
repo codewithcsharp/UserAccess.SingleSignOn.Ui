@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Navbar from './Navbar';
 
 jest.mock('../apicomponents/RegistrationRequest', () => () => <button type="button">Register</button>);
@@ -32,7 +32,7 @@ describe('Navbar', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Open login form' }));
     fireEvent.click(screen.getByRole('button', { name: 'Login' }));
 
-    await waitFor(() => expect(screen.getByText('signed-in-user')).toBeInTheDocument());
+    expect(await screen.findByText('signed-in-user')).toBeInTheDocument();
     expect(JSON.parse(localStorage.getItem('userProfile'))).toEqual({
       username: 'signed-in-user',
       photoUrl: '/profile.jpg',
