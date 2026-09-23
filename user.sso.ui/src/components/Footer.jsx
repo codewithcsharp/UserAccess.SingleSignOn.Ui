@@ -37,25 +37,25 @@ const Footer = () => {
         <div className="footer-column footer-social">
           <h3>SOCIAL</h3>
           <div className="social-icons">
-            <a href="#"><img src = {linkedin} /></a>
-            <a href="#"><img src = {facebook} /></a>
-            <a href="#"><img src = {whatsapp} /></a>
-            <a href="#"><img src = {instagram} /></a>
-            <a href="#"><img src = {youtube} /></a>
+            <a href="https://www.linkedin.com/" aria-label="LinkedIn"><img src={linkedin} alt="LinkedIn" /></a>
+            <a href="https://www.facebook.com/" aria-label="Facebook"><img src={facebook} alt="Facebook" /></a>
+            <a href="https://www.whatsapp.com/" aria-label="WhatsApp"><img src={whatsapp} alt="WhatsApp" /></a>
+            <a href="https://www.instagram.com/" aria-label="Instagram"><img src={instagram} alt="Instagram" /></a>
+            <a href="https://www.youtube.com/" aria-label="YouTube"><img src={youtube} alt="YouTube" /></a>
           </div>
 
           <div className="footer-subsection">
             <h3>SOLUTIONS HUB</h3>
             <p>
               Our enterprise software products are open source solutions, and
-              accelerators on <a href="#">USER-LOGO Solutions Hub</a>.
+              accelerators on <a href="https://github.com/codewithcsharp/UserAccess.SingleSignOn.Ui">USER-LOGO Solutions Hub</a>.
             </p>
           </div>
 
           <div className="footer-subsection">
             <h3>PARTNERS</h3>
             <p>
-              Learn more about our <a href="#">Alliances and Partnerships</a>.
+              Learn more about our <a href="https://github.com/codewithcsharp/UserAccess.SingleSignOn.Ui">Alliances and Partnerships</a>.
             </p>
           </div>
         </div>
